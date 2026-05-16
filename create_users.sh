@@ -1,4 +1,4 @@
-#!/bin/bash'
+#!/bin/bash
 if [ "$EUID" -ne 0 ]; then
     echo "Kör som root!"
 fi
