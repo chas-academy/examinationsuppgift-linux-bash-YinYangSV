@@ -14,11 +14,17 @@ if [ $? -eq 0 ]; then
 fi
 
 useradd -m "$user"
+
 mkdir /home/$user/Documents /home/$user/Downloads /home/$user/Work
+
 chmod 700 /home/$user/Documents /home/$user/Downloads /home/$user/Work
-chown -R $user:$user /home/$user
+
 echo "Välkommen $user" > /home/$user/welcome.txt
+
 cut -d: -f1 /etc/passwd | grep -v "^$user$" >> /home/$user/welcome.txt
+
 cat /home/$user/welcome.txt
+
+chown -R $user:$user /home/$user
 
 done
