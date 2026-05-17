@@ -15,9 +15,13 @@ fi
 
 useradd -m "$user"
 
-mkdir /home/$user/Documents /home/$user/Downloads /home/$user/Work
+mkdir /home/$user/Downloads
+mkdir /home/$user/Work
+mkdir /home/$user/Documents
 
-chmod 700 /home/$user/Documents /home/$user/Downloads /home/$user/Work
+chmod 700 /home/$user/Downloads
+chmod 700 /home/$user/Work
+chmod 700 /home/$user/Documents
 
 echo "Välkommen $user" > /home/$user/welcome.txt
 
