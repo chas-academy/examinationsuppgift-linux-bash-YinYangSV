@@ -8,7 +8,7 @@ fi
 for user in "$@" ; do
     echo "Söker användare för $user"
     id "$user" &>/dev/null
-if [ $user -eq 0 ]; then
+if [ $? -eq 0 ]; then
     echo "Användaren $user finns redan i systemet"
     continue
 fi
@@ -29,8 +29,5 @@ echo "Välkommen $user" > /home/$user/welcome.txt
 cut -d: -f1 /etc/passwd | grep -v "^$user$" >> /home/$user/welcome.txt
 
 chown -R $user:$user /home/$user
-
-cat /home/$user/welcome.txt
-
 
 done
