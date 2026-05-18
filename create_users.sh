@@ -39,4 +39,5 @@ chown -R $user:$user /home/$user
 
 #skriver ut användare och välkommst text 
 cat /home/$user/welcome.txt
+
 done
