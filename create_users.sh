@@ -17,15 +17,15 @@ if [ $? -eq 0 ]; then
 fi
 
 #skapar användare och hemkatalog med att skapa en direcory via "-m"
-if ! useradd -m $user; then
+if ! useradd -m "$user"  ; then
     echo "Kunde inte skapa användare för $user"
     continue
 fi
-#mkdir skapar vi undermapparna för användaren och då skapar vi,Documents, Downloads, Work.
-mkdir /home/$user/Documents /home/$user/Downloads /home/$user/Work
+#mkdir skapar vi undermapparna för användaren och då skapar vi,Documents, Downloads, Work. Sedan ifall undermapparna redan finns så skapas dem inte och de skickas inget felmeddelande via -p
+mkdir -p "/home/$user/Documents" "/home/$user/Downloads" "/home/$user/Work"
 
 #Nu sätter vi att användaren blir ägaren över undermapparna, och tillsammans med chown senare äger användaren hela sin användarflik och allt inom de också
-chmod 700 /home/$user/Documents /home/$user/Downloads /home/$user/Work
+chmod 700 "/home/$user/Documents" "/home/$user/Downloads" "/home/$user/Work"
 
 echo "Välkommen $user" > /home/$user/welcome.txt
 
@@ -33,5 +33,6 @@ echo "Välkommen $user" > /home/$user/welcome.txt
 cut -d: -f1 /etc/passwd | grep -v "^$user$" >> /home/$user/welcome.txt
 
 chown -R $user:$user /home/$user
-
+#skriver ut användare och välkommst text 
+cat /home/$user/welcome.txt
 done
