@@ -1,10 +1,13 @@
 #!/bin/bash
-
+#Kontrolerear root, $EUID är en befintlig variablem, "-ne 0" kollar om den är 0, det vill säga om värdet är 0 är det en root användare,
+#om rootanvändaren finns kommer medelandet "upp kör som root!", annars forsätter den med koden
 if [ "$EUID" -ne 0 ]; then
     echo "Kör som root!"
     exit 1
 fi
-
+#Här börjar loopen för användarskapandet
+#Första delen kollar om användaren finns i systemet och därefter antingen fortsätter med att skapa en användare eller,
+#att avsluta koden med ett felmeddelande att användaren redan finns
 for user in "$@" ; do
     echo "Söker användare för $user"
     id "$user" &>/dev/null
@@ -12,20 +15,17 @@ if [ $? -eq 0 ]; then
     echo "Användaren $user finns redan i systemet"
     continue
 fi
+#skapar användare med att skapa en direcory via "-m" och specifera hem directory via "-d /home/$user"
+useradd -m -d /home/$user $user
 
-useradd -m "$user"
+#mkdir skapar vi undermapparna för användaren och då skapar vi,Documents, Downloads, Work.
+mkdir /home/$user/Documents /home/$user/Downloads /home/$user/Work
 
-mkdir /home/$user/Downloads
-mkdir /home/$user/Work
-mkdir /home/$user/Documents
-
-chmod 700 /home/$user
-chmod 700 /home/$user/Downloads
-chmod 700 /home/$user/Work
-chmod 700 /home/$user/Documents
+#Nu sätter vi att användaren blir ägaren över undermapparna, och tillsammans med chown senare äger användaren hela sin användarflik och allt inom de också
+chmod 700 /home/$user/Documents /home/$user/Downloads /home/$user/Work
 
 echo "Välkommen $user" > /home/$user/welcome.txt
-
+#Cut extraherar vi vårt tillgång för lösenord genom att lägga det via kolon och välja in rad 1 "f1" och tar därav inte in andra använare till denna user.
 cut -d: -f1 /etc/passwd | grep -v "^$user$" >> /home/$user/welcome.txt
 
 chown -R $user:$user /home/$user
