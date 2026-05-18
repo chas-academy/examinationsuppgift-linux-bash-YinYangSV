@@ -17,7 +17,7 @@ if [ $? -eq 0 ]; then
 fi
 
 #skapar användare och hemkatalog med att skapa en direcory via "-m"
-if ! useradd -m "$user"  ; then
+if ! useradd -m "$@"  ; then
     echo "Kunde inte skapa användare för $user"
     continue
 fi
