@@ -13,11 +13,12 @@ for user in "$@" ; do
     id "$user" &>/dev/null
 if [ $? -eq 0 ]; then
     echo "Användaren $user finns redan i systemet"
-    continue
 fi
 
 #skapar användare och hemkatalog med att skapa en direcory via "-m"
+if ! id "$user" &>/dev/null; then
 useradd "$user" -m
+fi
 #mkdir skapar vi undermapparna för användaren och då skapar vi,Documents, Downloads, Work. Sedan ifall undermapparna redan finns så skapas dem inte och de skickas inget felmeddelande via -p
 
 mkdir -p "/home/$user/Work"
