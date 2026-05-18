@@ -16,7 +16,7 @@ if [ $? -eq 0 ]; then
     continue
 fi
 #skapar användare med att skapa en direcory via "-m" och specifera hem directory via "-d /home/$user"
-useradd -m -d /home/$user $user
+sudo useradd -m -d /home/$user $user
 
 #mkdir skapar vi undermapparna för användaren och då skapar vi,Documents, Downloads, Work.
 mkdir /home/$user/Documents /home/$user/Downloads /home/$user/Work
