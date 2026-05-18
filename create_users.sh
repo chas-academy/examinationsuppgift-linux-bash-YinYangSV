@@ -15,8 +15,8 @@ if [ $? -eq 0 ]; then
     echo "Användaren $user finns redan i systemet"
     continue
 fi
-#skapar användare med att skapa en direcory via "-m" och specifera hem directory via "-d /home/$user"
-sudo useradd -m -d /home/$user $user
+#skapar användare med att skapa en direcory via "-m"
+useradd $user -m
 
 #mkdir skapar vi undermapparna för användaren och då skapar vi,Documents, Downloads, Work.
 mkdir /home/$user/Documents /home/$user/Downloads /home/$user/Work
@@ -25,6 +25,7 @@ mkdir /home/$user/Documents /home/$user/Downloads /home/$user/Work
 chmod 700 /home/$user/Documents /home/$user/Downloads /home/$user/Work
 
 echo "Välkommen $user" > /home/$user/welcome.txt
+
 #Cut extraherar vi vårt tillgång för lösenord genom att lägga det via kolon och välja in rad 1 "f1" och tar därav inte in andra använare till denna user.
 cut -d: -f1 /etc/passwd | grep -v "^$user$" >> /home/$user/welcome.txt
 
