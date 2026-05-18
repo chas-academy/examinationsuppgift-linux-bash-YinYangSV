@@ -17,10 +17,7 @@ if [ $? -eq 0 ]; then
 fi
 
 #skapar användare och hemkatalog med att skapa en direcory via "-m"
-if ! useradd -m "$@"  ; then
-    echo "Kunde inte skapa användare för $user"
-    continue
-fi
+adduser --disabled-password --comment "" "$user"
 #mkdir skapar vi undermapparna för användaren och då skapar vi,Documents, Downloads, Work. Sedan ifall undermapparna redan finns så skapas dem inte och de skickas inget felmeddelande via -p
 mkdir -p "/home/$user/Documents" "/home/$user/Downloads" "/home/$user/Work"
 
