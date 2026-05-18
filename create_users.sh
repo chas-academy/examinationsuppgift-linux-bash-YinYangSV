@@ -15,9 +15,12 @@ if [ $? -eq 0 ]; then
     echo "Användaren $user finns redan i systemet"
     continue
 fi
-#skapar användare med att skapa en direcory via "-m", tillsammans med "--badname" tar vi bort strika regeler som kan vara stora bokstäver o.s.v.
-useradd $user -m
 
+#skapar användare och hemkatalog med att skapa en direcory via "-m"
+if ! useradd -m $user; then
+    echo "Kunde inte skapa användare för $user"
+    continue
+fi
 #mkdir skapar vi undermapparna för användaren och då skapar vi,Documents, Downloads, Work.
 mkdir /home/$user/Documents /home/$user/Downloads /home/$user/Work
 
